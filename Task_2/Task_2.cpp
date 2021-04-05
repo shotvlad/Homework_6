@@ -7,7 +7,7 @@ using namespace std;
 /*2. КРЕСТИКИ-НОЛИКИ. Запрограммируйте и сыграйте с компьютером в игру "Крестики-нолики".*/
 void getGame();
 int getDecency();
-char getCrossOrZero();
+char getCrossOrZero(int decency);
 char getCrossOrZeroComputer(char player);
 void getField(char field[]);
 void getGameDecency(char field[], char player, char computer, int decency, int cell);
@@ -50,9 +50,7 @@ void getGame()
 
 	decency = getDecency();
 
-	clearConsole();
-
-	player = getCrossOrZero();
+	player = getCrossOrZero(decency);
 
 	computer = getCrossOrZeroComputer(player);
 
@@ -254,9 +252,9 @@ int getDecency()
 	else return 1;
 }
 
-char getCrossOrZero()
+char getCrossOrZero(int decency)
 {
-	if (getIsChoiceSituation(3))
+	if (decency == 0)
 	{
 		return 'x';
 	}
@@ -306,10 +304,7 @@ void coutSituation(int situation)
 	{
 		cout << "Will you go first? (1 - Yes, 0 - No): ";
 	}
-	else if (situation == 3)
-	{
-		cout << "Cross or zero? (1 - x, 0 - o): ";
-	}
+	else {}
 }
 
 bool getIsChoice(int choice)
