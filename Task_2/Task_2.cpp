@@ -9,31 +9,31 @@ void getGame();
 int getDecency();
 char getCrossOrZero(int decency);
 char getCrossOrZeroComputer(char player);
-void getField(char field[]);
-void getGameDecency(char field[], char player, char computer, int decency, int cell);
-int getRulesGame(char field[], char player, char computer, int cell);
-bool getWinСombinations(char field[], char element);
-bool getWinСombinationsHorizontal(char field[], char element);
-bool getWinСombinationVertically(char field[], char element);
-bool getWinСombinationDiagonally(char field[], char element);
-void getEnterPlayer(char field[], char player);
-void getEnterComputer(char field[], char computer);
-void getFieldEnter();
+void enterField(char field[]);
+void gameDecency(char field[], char player, char computer, int decency, int cell);
+int getWinСombinations(char field[], char player, char computer, int cell);
+bool isWinСombinations(char field[], char element);
+bool isWinСombinationsHorizontal(char field[], char element);
+bool isWinСombinationVertically(char field[], char element);
+bool isWinСombinationDiagonally(char field[], char element);
+void enterPlayer(char field[], char player);
+void enterComputer(char field[], char computer);
+void fieldExample();
 
-bool getIsChoiceSituation(int situation);
+bool isChoiceSituation(int situation);
 void coutSituation(int situation);
-bool getIsChoice(int choice);
+bool isChoice(int choice);
 void clearConsole();
 
 int main()
 {
-	bool isCheak = true;
+	bool isCheck = true;
 
-	while (isCheak)
+	while (isCheck)
 	{
 		getGame();
 
-		isCheak = getIsChoiceSituation(1);
+		isCheck = isChoiceSituation(1);
 
 		clearConsole();
 	}
@@ -58,15 +58,15 @@ void getGame()
 	{
 		clearConsole();
 
-		getField(field);
+		field(field);
 
-		getGameDecency(field, player, computer, decency, cell);
+		gameDecency(field, player, computer, decency, cell);
 
 		clearConsole();
 
-		getField(field);
+		field(field);
 
-		if (getRulesGame(field, player, computer, cell) == 1)
+		if (getWinСombinations(field, player, computer, cell) == 1)
 		{
 			break;
 		}
@@ -77,17 +77,17 @@ void getGame()
 	}
 }
 
-int getRulesGame(char field[], char player, char computer, int cell)
+int getWinСombinations(char field[], char player, char computer, int cell)
 {
 	if (cell > 3)
 	{
-		if (getWinСombinations(field, player))
+		if (isWinСombinations(field, player))
 		{
 			cout << "You win!!!" << endl;
 
 			return 1;
 		}
-		else if (getWinСombinations(field, computer))
+		else if (isWinСombinations(field, computer))
 		{
 			cout << "You've lost." << endl;
 
@@ -98,24 +98,24 @@ int getRulesGame(char field[], char player, char computer, int cell)
 	else return 0;
 }
 
-bool getWinСombinations(char field[], char element)
+bool isWinСombinations(char field[], char element)
 {
-	if (getWinСombinationsHorizontal(field, element))
+	if (isWinСombinationsHorizontal(field, element))
 	{
 		return true;
 	}
-	else if (getWinСombinationVertically(field, element))
+	else if (isWinСombinationVertically(field, element))
 	{
 		return true;
 	}
-	else if (getWinСombinationDiagonally(field, element))
+	else if (isWinСombinationDiagonally(field, element))
 	{
 		return true;
 	}
 	else return false;
 }
 
-bool getWinСombinationsHorizontal(char field[], char element)
+bool isWinСombinationsHorizontal(char field[], char element)
 {
 	for (int cell = 0; cell < CELLS; cell += 3)
 	{
@@ -128,7 +128,7 @@ bool getWinСombinationsHorizontal(char field[], char element)
 	return false;
 }
 
-bool getWinСombinationVertically(char field[], char element)
+bool isWinСombinationVertically(char field[], char element)
 {
 	for (int cell = 0; cell < 3; cell++)
 	{
@@ -141,7 +141,7 @@ bool getWinСombinationVertically(char field[], char element)
 	return false;
 }
 
-bool getWinСombinationDiagonally(char field[], char element)
+bool isWinСombinationDiagonally(char field[], char element)
 {
 	if ((field[0] == element) and (field[4] == element) and (field[8] == element))
 	{
@@ -154,7 +154,7 @@ bool getWinСombinationDiagonally(char field[], char element)
 	else return false;
 }
 
-void getField(char field[])
+void enterField(char field[])
 {
 	cout << " " << field[6] << " | " << field[7] << " | " << field[8] << endl
 		 << "---+---+---" << endl
@@ -163,26 +163,26 @@ void getField(char field[])
 		 << " " << field[0] << " | " << field[1] << " | " << field[2] << endl << endl;
 }
 
-void getGameDecency(char field[], char player, char computer, int decency, int cell)
+void gameDecency(char field[], char player, char computer, int decency, int cell)
 {
 	if ((decency + cell) % 2 == 0)
 	{
 		cout << "Your move. You " << player << "." << endl << endl;
 
-		getFieldEnter();
+		fieldExample();
 
-		getEnterPlayer(field, player);
+		enterPlayer(field, player);
 	}
 	else
 	{
 		cout << "Computer move." << endl;
 		Sleep(3000);
 
-		getEnterComputer(field, computer);
+		enterComputer(field, computer);
 	}
 }
 
-void getFieldEnter()
+void fieldExample()
 {
 	cout << "'7'|'8'|'9'" << endl
 		 << "---+---+---" << endl
@@ -191,7 +191,7 @@ void getFieldEnter()
 		 << "'1'|'2'|'3'" << endl << endl;
 }
 
-void getEnterComputer(char field[], char computer)
+void enterComputer(char field[], char computer)
 {
 	int number = 0;
 
@@ -208,7 +208,7 @@ void getEnterComputer(char field[], char computer)
 	}
 }
 
-void getEnterPlayer(char field[], char player)
+void enterPlayer(char field[], char player)
 {
 	int number = 0;
 
@@ -245,7 +245,7 @@ void getEnterPlayer(char field[], char player)
 
 int getDecency()
 {
-	if (getIsChoiceSituation(2))
+	if (isChoiceSituation(2))
 	{
 		return 0;
 	}
@@ -270,7 +270,7 @@ char getCrossOrZeroComputer(char player)
 	else return 'o';
 }
 
-bool getIsChoiceSituation(int situation)
+bool isChoiceSituation(int situation)
 {
 	int choice = 0;
 
@@ -288,7 +288,7 @@ bool getIsChoiceSituation(int situation)
 		}
 		else if (choice == 0 or choice == 1)
 		{
-			return getIsChoice(choice);
+			return isChoice(choice);
 		}
 		else clearConsole();
 	}
@@ -307,7 +307,7 @@ void coutSituation(int situation)
 	else {}
 }
 
-bool getIsChoice(int choice)
+bool isChoice(int choice)
 {
 	if (choice == 1)
 	{
