@@ -5,7 +5,7 @@
 using namespace std;
 
 /*2. КРЕСТИКИ-НОЛИКИ. Запрограммируйте и сыграйте с компьютером в игру "Крестики-нолики".*/
-void getGame();
+void game();
 int getDecency();
 char getCrossOrZero(int decency);
 char getCrossOrZeroComputer(char player);
@@ -31,7 +31,7 @@ int main()
 
 	while (isCheck)
 	{
-		getGame();
+		game();
 
 		isCheck = isChoiceSituation(1);
 
@@ -43,7 +43,7 @@ int main()
 	return 0;
 }
 
-void getGame()
+void game()
 {
 	char field[CELLS] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' }, player = 0, computer = 0;
 	int decency = 0;
