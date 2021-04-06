@@ -58,13 +58,13 @@ void game()
 	{
 		clearConsole();
 
-		field(field);
+		enterField(field);
 
 		gameDecency(field, player, computer, decency, cell);
 
 		clearConsole();
 
-		field(field);
+		enterField(field);
 
 		if (getWinСombinations(field, player, computer, cell) == 1)
 		{
