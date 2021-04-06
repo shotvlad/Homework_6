@@ -4,39 +4,41 @@
 using namespace std;
 
 /*1. ПРОСВЕТ. Куб состоит из n3(n в кубе) прозрачных и непрозрачных кубиков. Имеется ли хотя бы один просвет?*/
-void getExplanation();
+void explanation();
 
-void getCubesInACub(char cube[]);
+void cubesInACub(char cube[]);
 
-void getСlearance(char cube[]);
-char getСlearanceView(char cube[], char clearance, int n, int view);
-int getI(int i, int view);
-bool getIsClearance(int i, char cube[], int view);
-int getCubeRow(int view);
+void clearance(char cube[]);
+
+char getСlearance(char cube[], char clearance, int n, int view);
+int getViev(int i, int view);
+
+bool isClearance(int i, char cube[], int view);
+int getViewCub(int view);
 char getCoutClearance(bool isClearance, int i, int view);
-void getCoutClearanceView(int view);
+void coutClearanceView(int view);
 
-void getViewCub(char cube[]);
+void viewCub(char cube[]);
 int getViewSection(char cube[], int cub);
-void getSplittingLines(int number);
+void splittingLines(int number);
 int getCubeWidth();
 
 int main()
 {
 	char cube[N * N * N] = { 0 };
 
-	getExplanation();
+	explanation();
 
-	getCubesInACub(cube);
+	cubesInACub(cube);
 
-	getViewCub(cube);
+	viewCub(cube);
 
-	getСlearance(cube);
+	clearance(cube);
 
 	return 0;
 }
 
-void getExplanation()
+void explanation()
 {
 	char sample = 0;
 
@@ -47,7 +49,7 @@ void getExplanation()
 	cout << sample << " - the cube is not transparent." << endl << endl;
 }
 
-void getCubesInACub(char cube[]) // Заполнение куба
+void cubesInACub(char cube[]) // Заполнение куба
 {
 	for (int i = 0; i < pow(N, 3); i++)
 	{
@@ -55,10 +57,10 @@ void getCubesInACub(char cube[]) // Заполнение куба
 	}
 }
 
-void getСlearance(char cube[]) // Просвет
+void clearance(char cube[]) // Просвет
 {
 	char clearance = 0;
-	clearance =	getСlearanceView(cube, clearance, 1, 1) + getСlearanceView(cube, clearance, N, 2) + getСlearanceView(cube, clearance, N, 3); 
+	clearance =	getСlearance(cube, clearance, 1, 1) + getСlearance(cube, clearance, N, 2) + getСlearance(cube, clearance, N, 3); 
 	// Вид спереди + вид слева + вид сверху
 
 	if (clearance == 0)
@@ -68,19 +70,19 @@ void getСlearance(char cube[]) // Просвет
 	else {}
 }
 
-char getСlearanceView(char cube[], char clearance, int n, int view) // Вид
+char getСlearance(char cube[], char clearance, int n, int view) // Вид
 {	
 	for (int i = 0; i < N * N * n; i++)
 	{
-		clearance += getCoutClearance(getIsClearance(i, cube, view), i, view);
+		clearance += getCoutClearance(isClearance(i, cube, view), i, view);
 
-		i += getI(i, view);
+		i += getViev(i, view);
 	}
 
 	return clearance;
 }
 
-int getI(int i, int view)
+int getViev(int i, int view)
 {
 	if (view == 2) // сбоку
 	{
@@ -97,7 +99,7 @@ int getI(int i, int view)
 	else return 0; // спереди
 }
 
-bool getIsClearance(int i, char cube[], int view)
+bool isClearance(int i, char cube[], int view)
 {
 	int numberCube = 0, cubeRow = i;
 	
@@ -108,7 +110,7 @@ bool getIsClearance(int i, char cube[], int view)
 			return false;
 		}
 
-		cubeRow += getCubeRow(view);
+		cubeRow += getViewCub(view);
 
 		numberCube++;
 	}
@@ -116,7 +118,7 @@ bool getIsClearance(int i, char cube[], int view)
 	return true;
 }
 
-int getCubeRow(int view)
+int getViewCub(int view)
 {
 	if (view == 1) // спереди
 	{
@@ -134,14 +136,14 @@ char getCoutClearance(bool isClearance, int i, int view)
 	if (isClearance)
 	{
 		cout << "The cube is clearance through the " << i + 1 << " cube ";
-		getCoutClearanceView(view);
+		coutClearanceView(view);
 
 		return 1;
 	}
 	else return 0;
 }
 
-void getCoutClearanceView(int view)
+void coutClearanceView(int view)
 {
 	if (view == 1) // спереди
 	{
@@ -154,7 +156,7 @@ void getCoutClearanceView(int view)
 	else cout << "at the above." << endl; // сверху
 }
 
-void getViewCub(char cube[])
+void viewCub(char cube[])
 {
 	cout << "Front view of the cube in sections: " << endl << endl;
 	int cub = 0;
@@ -180,7 +182,7 @@ int getViewSection(char cube[], int cub)
 		{
 			cout << endl;
 
-			getSplittingLines(number);
+			splittingLines(number);
 		}
 		else
 		{
@@ -193,7 +195,7 @@ int getViewSection(char cube[], int cub)
 	return cub;
 }
 
-void getSplittingLines(int number)
+void splittingLines(int number)
 {
 	if (number < pow(N, 2) - 1)
 	{
